@@ -22,6 +22,7 @@
     "es"
   ],
   "scripts": {
+    "git-push-origin": "git push origin v7.2.1-taichiyi",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "build:es": "babel src --out-dir es",
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/react-redux.js",
