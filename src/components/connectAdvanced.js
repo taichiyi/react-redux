@@ -52,7 +52,7 @@ function captureWrapperProps(
   }
 }
 
-function subscribeUpdates(
+function /* ✨ 关键函数 */subscribeUpdates(
   shouldHandleStateChanges,
   store,
   subscription,
@@ -72,7 +72,7 @@ function subscribeUpdates(
   let lastThrownError = null
 
   // We'll run this callback every time a store subscription update propagates to this component
-  const checkForUpdates = () => {
+  const checkForUpdates = /* ✨redux 的最终观察者 */() => {
     if (didUnsubscribe) {
       // Don't run stale listeners.
       // Redux doesn't guarantee unsubscriptions happen until next dispatch.
@@ -230,7 +230,7 @@ export default function connectAdvanced(
 
   const Context = context
 
-  return function wrapWithConnect(WrappedComponent) {
+  return /* ✨ 装饰对象 */function wrapWithConnect(WrappedComponent) {
     if (
       process.env.NODE_ENV !== 'production' &&
       !isValidElementType(WrappedComponent)
@@ -271,7 +271,7 @@ export default function connectAdvanced(
     // that just executes the given callback immediately.
     const usePureOnlyMemo = pure ? useMemo : callback => callback()
 
-    function ConnectFunction(props) {
+    /* ✨ react 会调用此方法 */function ConnectFunction(props) {
       const [
         propsContext,
         reactReduxForwardedRef,
@@ -334,7 +334,7 @@ export default function connectAdvanced(
 
         // This Subscription's source should match where store came from: props vs. context. A component
         // connected to the store via props shouldn't use subscription from context, or vice versa.
-        const subscription = new Subscription(
+        const subscription = /* ✨ redux 观察者 */new Subscription(
           store,
           didStoreComeFromProps ? null : contextValue.subscription
         )
@@ -372,7 +372,7 @@ export default function connectAdvanced(
       // causes a change to the calculated child component props (or we caught an error in mapState)
       const [
         [previousStateUpdateResult],
-        forceComponentUpdateDispatch
+        /* ✨ 产生 dispatch */forceComponentUpdateDispatch
       ] = useReducer(storeStateUpdatesReducer, EMPTY_ARRAY, initStateUpdates)
 
       // Propagate any mapState/mapDispatch errors upwards

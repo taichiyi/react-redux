@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ReactReduxContext } from './Context'
 import Subscription from '../utils/Subscription'
 
-function Provider({ store, context, children }) {
+function /* ✨ */Provider({ store, context, children }) {
   const contextValue = useMemo(() => {
     const subscription = new Subscription(store)
     subscription.onStateChange = subscription.notifyNestedSubs
